@@ -6,7 +6,7 @@ PyTorch implementation of paper "Genetic Quantization-Aware Approximation for No
 > DAC 2024
 > 
 
-#### [paper](http://arxiv.org/abs/2403.19591)
+### [Project page](https://github.com/PingchengDong/GQA-LUT) | [paper](http://arxiv.org/abs/2403.19591)
 
 ## Installation
 Clone this repo with submodules:
