@@ -4,9 +4,9 @@ random.seed(42)
 np.random.seed(42)
 from scipy import special
 import os
-from gqa_statistics import *
 from deap import base, creator, tools, algorithms
 import argparse
+import json
 
 ACT_FUNCS = {
     "swish": lambda x: x / (1.0 + np.exp(-x)),
@@ -18,6 +18,18 @@ ACT_FUNCS = {
     "reci": lambda x: np.reciprocal(x),
     "sqrt_reci": lambda x: np.reciprocal(np.sqrt(x)),
 }
+
+def round_to_nearest_bits(x, decimal_bits):
+    """
+
+    :param x: floating input
+    :param decimal_bits: bits that the input should reserve
+    :return: the formatted input with specific decimal bits
+    """
+    scaled_value = x * (2 ** decimal_bits)
+    rounded_value = np.round(scaled_value)  # very important
+    result = rounded_value / (2 ** decimal_bits)
+    return result
 
 def save_to_file(data, filename):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
