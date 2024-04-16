@@ -198,7 +198,7 @@ def offline_pwlstore_one_shot(act_func='hswish', x_range=(-3.5, 3.5), sp_range=(
         pos_inf = 4.0
         w_b_bit = 8
     else:
-        raise NotImplementedError('sb')
+        raise NotImplementedError('Not support')
     results = {}
     results[act_func] = {}
     split_points, coeff, bias = autopwl(act_func, x_range=x_range, sp_range=sp_range, num_splits=num_splits, total_iters=total_iters, decimal_bit=decimal_bit_range, offset=offset, neg_inf=neg_inf, pos_inf=pos_inf, w_b_bit=w_b_bit, mutate=mutate)
