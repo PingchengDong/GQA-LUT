@@ -202,7 +202,6 @@ def offline_pwlstore_one_shot(act_func='hswish', x_range=(-3.5, 3.5), sp_range=(
     results = {}
     results[act_func] = {}
     split_points, coeff, bias = autopwl(act_func, x_range=x_range, sp_range=sp_range, num_splits=num_splits, total_iters=total_iters, decimal_bit=decimal_bit_range, offset=offset, neg_inf=neg_inf, pos_inf=pos_inf, w_b_bit=w_b_bit, mutate=mutate)
-    print("base split points:", split_points)
     for bit in range(decimal_bit_range[0], decimal_bit_range[1]+1):
         split_points_tmp = [round_to_nearest_bits(split_point, bit) for split_point in split_points]
         print(f"Start for activation_function: {act_func} and decimal_bit: {bit}")
