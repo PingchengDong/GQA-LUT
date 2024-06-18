@@ -207,9 +207,9 @@ def offline_pwlstore_one_shot(act_func='hswish', x_range=(-3.5, 3.5), sp_range=(
         split_points_tmp = [round_to_nearest_bits(split_point, bit) for split_point in split_points]
         print(f"Start for activation_function: {act_func} and decimal_bit: {bit}")
         results[act_func][bit] = {
-            "split_points": split_points_tmp[1:-1],
-            "coeff": coeff,
-            "bias": bias
+            "breakpoints": split_points_tmp[1:-1],
+            "slopes": coeff,
+            "intercepts": bias
         }
     save_to_file(results, f"./pretrained/{act_func}_pwl_{num_splits}.json")
 
