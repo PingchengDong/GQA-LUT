@@ -37,7 +37,7 @@ class GQA_LUT(nn.Module):
         device = input.device
         # hw storage: sign|integer|decimal = 1|1|decimal_bit
         # obtain the scale factor's power bit
-        power_bit = -torch.log2(scale)
+        power_bit = -int(torch.log2(scale))
         # fetch the params from the json file 
         # based on the power bit of the scale factor
         params = self.pwl_params[f'{power_bit}']
@@ -48,7 +48,7 @@ class GQA_LUT(nn.Module):
         scaled_breakpoints = breakpoints / scale
         
         # fetch the intercepts from the json file
-        intercepts = torch.tensor(params['intercepts']).to(device)
+        intercepts = torch.tensor(params['intercept']).to(device)
         # shift the intercepts with the scale factor, eq(3)
         scaled_intercepts = intercepts / scale
 
@@ -86,10 +86,9 @@ def round_to_nearest_bits_torch(x, decimal_bits):
 if __name__ == "__main__":
     fp32_test_input = torch.rand(10) # generate an arbitrary test input vector
     fp32_torchfunc_output = F.gelu(fp32_test_input) # the fp32 gelu activation function process using pytorch function
-    scale = torch.tensor(fp32_test_input.max() / 127.0) # get the scale by simply using the maximum of the input and the upper bound
+    scale = torch.tensor(2. ** -5) # dummy scaling factor, which should be obtained via QAT and transformed to power-of-two
     int8_test_input = torch.clamp(torch.round(fp32_test_input / scale), -128.0, 127.0) # quantize the fp32 input to int8
     gqa_hw_model = GQA_LUT(pwl_type='gelu', pwl_dir='pretrained/gelu_pwl_7.json') # instantiate the gqa hardware model
-    int8_gqa_output = gqa_hw_model(int8_test_input, scale) # process in gqa hw model
-    fp32_gqa_output = int8_gqa_output * scale # dequantize the output to fp32 again for further training or inference
+    fp32_gqa_output = gqa_hw_model(int8_test_input, scale) # process in gqa hw model
     print(fp32_torchfunc_output)
     print(fp32_gqa_output)
