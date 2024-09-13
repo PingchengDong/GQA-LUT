@@ -21,9 +21,8 @@ ACT_FUNCS = {
 
 def round_to_nearest_bits(x, decimal_bits):
     """
-
     :param x: floating input
-    :param decimal_bits: bits that the input should reserve
+    :param decimal_bits: required decimal bits
     :return: the formatted input with specific decimal bits
     """
     scaled_value = x * (2 ** decimal_bits)
@@ -90,7 +89,7 @@ def create_float_point_attr(sp_range):
     return rand_val
 
 
-def genetic_find_best_split_points_one_shot(func_name, x_range, sp_range, num_splits, total_iters=1000, decimal_bits_range=(0,6),
+def best_split_points_finder(func_name, x_range, sp_range, num_splits, total_iters=1000, decimal_bits_range=(0,6),
                                    pop_size=50, crossover_prob=0.7, mutation_prob=0.2, offset=0, neg_inf=-4, pos_inf=4, w_b_bit=8, mutate=True):
     print("processing range:", decimal_bits_range)
     func = ACT_FUNCS[func_name]
@@ -169,18 +168,17 @@ def autopwl(activation_function_name, x_range=(-4, 4), sp_range=(-4, 4), num_spl
         print("Invalid activation function name. Valid names are:", ", ".join(ACT_FUNCS.keys()))
         return
     print("x_range:", x_range, "sp_range:", sp_range)
-    split_points = genetic_find_best_split_points_one_shot(activation_function_name, x_range, sp_range, num_splits, total_iters, decimal_bit, offset=offset, neg_inf=neg_inf, pos_inf=pos_inf, w_b_bit=w_b_bit, mutate=mutate)
+    split_points = best_split_points_finder(activation_function_name, x_range, sp_range, num_splits, total_iters, decimal_bit, offset=offset, neg_inf=neg_inf, pos_inf=pos_inf, w_b_bit=w_b_bit, mutate=mutate)
     coeff, bias = get_list(split_points, activation_function_name, w_b_bit, pr=True)
     return split_points, coeff, bias
 
 
-def offline_pwlstore_one_shot(act_func='hswish', x_range=(-3.5, 3.5), sp_range=(-3, 3), decimal_bit_range=(0, 6), num_splits=7,
+def gqa_lut_trainer(act_func='hswish', x_range=(-3.5, 3.5), sp_range=(-3, 3), decimal_bit_range=(0, 6), num_splits=7,
                      total_iters=100, mutate=True):
     if act_func =='gelu' and num_splits == 7: offset = 2
     elif act_func =='hswish' and num_splits==15:offset = 2
     else: offset = 0
     print("offset:", offset)
-
     if act_func == 'gelu' or act_func == 'hswish':
         neg_inf = -10000.0
         pos_inf = 10000.0
@@ -228,7 +226,7 @@ def config_parser():
 def main():
     parser = config_parser()
     args = parser.parse_args()
-    offline_pwlstore_one_shot(act_func=args.act_func, x_range=args.x_range, sp_range=args.sp_range,
+    gqa_lut_trainer(act_func=args.act_func, x_range=args.x_range, sp_range=args.sp_range,
                          decimal_bit_range=args.decimal_bit_range, num_splits=args.num_splits,
                          total_iters=args.total_iters, mutate=args.mutate)
 
