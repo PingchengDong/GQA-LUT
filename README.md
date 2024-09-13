@@ -42,7 +42,7 @@ Example for GQA-LUT approximation of GELU function with 8 segpoints:
 make gelu_8
 ```
 
-## Pytorch Operator
+## Finetuning
 After perfoming quantization-aware training of FP32 models, user can replace the original activation functions with ```gqa_lut_pwl``` operator in  ```gqa_lut_op.py```, and then perform a new round of finetuning. The overall finetuning flow is shown below:
 ![Flow](Training_Flow.png)
 
