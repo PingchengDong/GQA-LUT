@@ -3,13 +3,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 import json
 
-class GQA_LUT(nn.Module):
+class gqa_lut_pwl(nn.Module):
     def __init__(self, pwl_type, pwl_dir, decimal_bit=6) -> None:
         """
         :param pwl_type: the required non-linear function to approximate
         :param pwl_dir: pretrained dir
         """
-        super(GQA_LUT, self).__init__()
+        super(gqa_lut_pwl, self).__init__()
         # supported fp func, can be extended
         act_funcs = {
             'gelu': nn.GELU(),
@@ -68,20 +68,6 @@ class GQA_LUT(nn.Module):
         
         # train in STE manner
         return (pwl_func * scale - self.func(input * scale)).detach() + self.func(input * scale)
-
-def round_to_nearest_bits_torch(x, decimal_bits):
-    """
-
-    :param x: floating input
-    :param decimal_bits: bits that the input should reserve
-    :return: the formatted input with specific decimal bits
-    """
-    scaled_value = x * (2 ** decimal_bits)
-    rounded_value = torch.round(scaled_value)  # very important
-    result = rounded_value / (2 ** decimal_bits)
-    y = result
-    y_grad = x
-    return (y - y_grad).detach() + y_grad
 
 if __name__ == "__main__":
     fp32_test_input = torch.rand(10) # generate an arbitrary test input vector
