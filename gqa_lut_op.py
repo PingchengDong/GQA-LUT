@@ -1,3 +1,4 @@
+import decimal
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -37,7 +38,10 @@ class gqa_lut_pwl(nn.Module):
         device = input.device
         # hw storage: sign|integer|decimal = 1|1|decimal_bit
         # obtain the scale factor's power bit
-        power_bit = -int(torch.log2(scale))
+        power_bit =  -torch.log2(scale).int().item() 
+        # clip the power bit to the range of [0, decimal_bit]
+        if power_bit < 0: power_bit = 0
+        elif power_bit > self.decimal_bit: power_bit = self.decimal_bit
         # fetch the params from the json file 
         # based on the power bit of the scale factor
         params = self.pwl_params[f'{power_bit}']
@@ -48,7 +52,7 @@ class gqa_lut_pwl(nn.Module):
         scaled_breakpoints = breakpoints / scale
         
         # fetch the intercepts from the json file
-        intercepts = torch.tensor(params['intercept']).to(device)
+        intercepts = torch.tensor(params['intercepts']).to(device)
         # shift the intercepts with the scale factor, eq(3)
         scaled_intercepts = intercepts / scale
 
