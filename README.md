@@ -1,6 +1,7 @@
 # Genetic Quantization-Aware Approximation for Non-Linear Operations in Transformers
-![Demo](GQA_FIG.png)
 The official PyTorch implementation of ["Genetic Quantization-Aware Approximation for Non-Linear Operations in Transformers"](http://arxiv.org/abs/2403.19591) [DAC 2024]
+
+![Demo](GQA_FIG.png)
 
 ## Installation
 Clone this repo with submodules:
