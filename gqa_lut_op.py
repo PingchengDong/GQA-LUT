@@ -74,7 +74,7 @@ if __name__ == "__main__":
     fp32_torchfunc_output = F.gelu(fp32_test_input) # the fp32 gelu activation function process using pytorch function
     scale = torch.tensor(2. ** -5) # dummy scaling factor, which should be obtained via QAT and transformed to power-of-two
     int8_test_input = torch.clamp(torch.round(fp32_test_input / scale), -128.0, 127.0) # quantize the fp32 input to int8
-    gqa_hw_model = GQA_LUT(pwl_type='gelu', pwl_dir='pretrained/gelu_pwl_7.json') # instantiate the gqa hardware model
+    gqa_hw_model = gqa_lut_pwl(pwl_type='gelu', pwl_dir='pretrained/gelu_pwl_7.json') # instantiate the gqa hardware model
     fp32_gqa_output = gqa_hw_model(int8_test_input, scale) # process in gqa hw model
     print(fp32_torchfunc_output)
     print(fp32_gqa_output)
