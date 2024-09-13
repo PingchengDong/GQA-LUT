@@ -1,0 +1,31 @@
+name: gqa_lut
+channels:
+  - defaults
+dependencies:
+  - _libgcc_mutex=0.1=main
+  - _openmp_mutex=5.1=1_gnu
+  - ca-certificates=2024.7.2=h06a4308_0
+  - certifi=2022.12.7=py37h06a4308_0
+  - libedit=3.1.20230828=h5eee18b_0
+  - libffi=3.2.1=hf484d3e_1007
+  - libgcc-ng=11.2.0=h1234567_1
+  - libgomp=11.2.0=h1234567_1
+  - libstdcxx-ng=11.2.0=h1234567_1
+  - ncurses=6.4=h6a678d5_0
+  - openssl=1.0.2u=h7b6447c_0
+  - pip=22.3.1=py37h06a4308_0
+  - python=3.7.0=h6e4f718_3
+  - readline=7.0=h7b6447c_5
+  - setuptools=65.6.3=py37h06a4308_0
+  - sqlite=3.33.0=h62c20be_0
+  - tk=8.6.14=h39e8969_0
+  - wheel=0.38.4=py37h06a4308_0
+  - xz=5.4.6=h5eee18b_1
+  - zlib=1.2.13=h5eee18b_1
+  - pip:
+    - deap==1.4.1
+    - numpy==1.21.6
+    - scipy==1.7.3
+    - torch==1.7.1+cu110
+    - typing-extensions==4.7.1
+prefix: /home/pdongaa/anaconda3/envs/gqa_lut
