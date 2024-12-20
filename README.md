@@ -16,7 +16,7 @@ conda env create -f environment.yml
 conda activate gqa_lut
 ```
 
-## Support List
+## Supporting List
 ```
 ├──Non-linear operations
     ├──GELU
@@ -25,6 +25,7 @@ conda activate gqa_lut
     ├──Exponent
     ├──Reciprocal
     ├──Reciprocal of square root
+    ├──SiLU
     ├──...
 ```
 
