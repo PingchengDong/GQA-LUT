@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import argparse
 import json
 from scipy import special
-
+import os
 ACT_FUNCS = {
     "swish": lambda x: x / (1.0 + np.exp(-x)),
     "sigmoid": lambda x: 1.0 / (1.0 + np.exp(-x)),
@@ -96,7 +96,8 @@ def plot_json_functions(json_data, xmin, xmax, samples, output_dir):
 
 def main():
     args = parse_args()
-
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
     if args.func:
         func = ACT_FUNCS[args.func]
         plot_and_save_func(func, lambda x, *_: None, args.xmin, args.xmax, args.samples, args.output_dir, args.func)

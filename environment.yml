@@ -28,4 +28,5 @@ dependencies:
     - scipy==1.7.3
     - torch==1.7.1+cu110
     - typing-extensions==4.7.1
+    - matplotlib==3.5.3
 prefix: /home/pdongaa/anaconda3/envs/gqa_lut
