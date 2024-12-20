@@ -1,4 +1,4 @@
-/pretrained/nnlut/
+/pretrained
 /Cmodels_SPU_Yonghao.py
 /Figure3.pdf
 /figure3_op_acc_compare_plot.py
@@ -6,4 +6,5 @@
 /gqa_statistics.py
 /Statistics_real.xlsx
 /.idea
+/saves/*png
 /__pycache__/

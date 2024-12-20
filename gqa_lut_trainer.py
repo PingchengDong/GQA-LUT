@@ -17,6 +17,7 @@ ACT_FUNCS = {
     "exp": lambda x: np.exp(x),
     "reci": lambda x: np.reciprocal(x),
     "sqrt_reci": lambda x: np.reciprocal(np.sqrt(x)),
+    "silu": lambda x: x / (1 + np.exp(-x)),
 }
 
 def round_to_nearest_bits(x, decimal_bits):
@@ -179,7 +180,7 @@ def gqa_lut_trainer(act_func='hswish', x_range=(-3.5, 3.5), sp_range=(-3, 3), de
     elif act_func =='hswish' and num_splits==15:offset = 2
     else: offset = 0
     print("offset:", offset)
-    if act_func == 'gelu' or act_func == 'hswish':
+    if act_func == 'gelu' or act_func == 'hswish' or act_func == 'silu':
         neg_inf = -10000.0
         pos_inf = 10000.0
         w_b_bit = 8
