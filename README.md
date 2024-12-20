@@ -41,7 +41,11 @@ Example for GQA-LUT approximation of GELU function with 8 segpoints:
 ```
 make gelu_8
 ```
-
+## Plot
+Example of ploting non-linear and pwl function:
+```
+python plot.py --json_file pretrained/silu_pwl_7.json --output_dir ./saves --func silu
+```
 ## Finetuning
 After perfoming quantization-aware training of FP32 models, user can replace the original activation functions with ```gqa_lut_pwl``` operator in  ```gqa_lut_op.py```, and then perform a new round of finetuning. The overall finetuning flow is shown below:
 ![Flow](Training_Flow.png)
